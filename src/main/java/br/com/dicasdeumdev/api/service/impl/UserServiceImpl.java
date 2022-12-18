@@ -54,5 +54,11 @@ public class UserServiceImpl implements IUserService {
         User nUser = mapper.map(user, User.class);
         return userRepository.save(nUser);
     }
+
+    @Override
+    public void delete(Integer id) {
+        findById(id);
+        userRepository.deleteById(id);
+    }
     
 }
