@@ -25,13 +25,16 @@ import br.com.dicasdeumdev.api.service.IUserService;
 @RequestMapping(value = "/user")
 public class UserResource {
     
+    
+    private static final String ID = "/{id}";
+
     @Autowired
     private IUserService userService;
     
     @Autowired
     private ModelMapper mapper;
     
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = ID)
     public ResponseEntity<UserDTO> findById(@PathVariable Integer id) {
         return ResponseEntity.ok()
                 .body(mapper.map(userService.findById(id), UserDTO.class));
@@ -51,20 +54,20 @@ public class UserResource {
     public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO user){
         User newUser = userService.create(user);
         URI uri = ServletUriComponentsBuilder
-                    .fromCurrentRequest().path("/{id}")
+                    .fromCurrentRequest().path(ID)
                     .buildAndExpand(newUser.getId())
                     .toUri();
         return ResponseEntity.created(uri).build();
     }
     
-    @PutMapping("/{id}")
+    @PutMapping(ID)
     public ResponseEntity<UserDTO> update(@PathVariable Integer id, @RequestBody UserDTO user){
         user.setId(id);
         User updateUser = userService.update(user);
         return ResponseEntity.ok().body(mapper.map(updateUser, UserDTO.class));
     }
     
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = ID)
     public ResponseEntity<UserDTO> delete(@PathVariable Integer id) {
         userService.delete(id);
         return ResponseEntity.noContent().build();
