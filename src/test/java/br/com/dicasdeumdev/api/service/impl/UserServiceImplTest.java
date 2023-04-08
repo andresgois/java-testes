@@ -16,10 +16,16 @@ import br.com.dicasdeumdev.api.domain.User;
 import br.com.dicasdeumdev.api.domain.dto.UserDTO;
 import br.com.dicasdeumdev.api.repository.UserRepository;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 @SpringBootTest
 public class UserServiceImplTest {
-    
+
     private static final int ID = 1;
+    public static final String NAME = "Andre";
+    public static final String EMAIL = "andre@email.com";
+    public static final String PASSWORD = "123";
     // Criar uma instância real
     @InjectMocks
     private UserServiceImpl service;
@@ -41,13 +47,15 @@ public class UserServiceImplTest {
     void whenFindByIdThenReturnAnUserInstance() {
        Mockito.when(repository.findById(Mockito.anyInt())).thenReturn(optionalUser);
        User response = service.findById(ID);
-       Assertions.assertEquals(User.class, response.getClass());
+       assertEquals(User.class, response.getClass());
+       assertEquals(ID, response.getId());
+       assertNotNull(response);
     }
     
     private void startUser() {
-        user = new User(ID, "Andre", "andre@email.com", "123");
-        userDto = new UserDTO(ID, "Andre", "andre@email.com", "123");
+        user = new User(ID, NAME, EMAIL, PASSWORD);
+        userDto = new UserDTO(ID, NAME, EMAIL, PASSWORD);
         optionalUser = Optional
-                .of(new User(ID, "Andre", "andre@email.com", "123"));
+                .of(new User(ID, NAME, EMAIL, PASSWORD));
     }
 }
