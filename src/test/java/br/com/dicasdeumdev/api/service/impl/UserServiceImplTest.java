@@ -1,7 +1,10 @@
 package br.com.dicasdeumdev.api.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import br.com.dicasdeumdev.api.service.exceptions.DataIntegratyViolationException;
 import br.com.dicasdeumdev.api.service.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +19,8 @@ import br.com.dicasdeumdev.api.repository.UserRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -61,6 +66,43 @@ public class UserServiceImplTest {
         } catch (Exception ex){
             assertEquals(ObjectNotFoundException.class, ex.getClass());
             assertEquals("Objeto não encontrado", ex.getMessage());
+        }
+    }
+
+    @Test
+    void whenFindAllThenReturnAnListOfUsers(){
+        List<User> users = new ArrayList<>();
+        users.add(user);
+        when(repository.findAll()).thenReturn(users);
+
+        List<User> response = service.findAll();
+        assertNotNull(response);
+        assertEquals(1, response.size());
+        assertEquals(User.class, response.get(0).getClass());
+        assertEquals(ID, response.get(0).getId());
+    }
+
+    @Test
+    void whenCreateThenReturnSucess(){
+        when(repository.save(any())).thenReturn(user);
+
+        User response = service.create(userDto);
+
+        assertNotNull(response);
+        assertEquals(User.class, response.getClass());
+        assertEquals(ID, response.getId());
+    }
+
+    @Test
+    void whenCreateThenReturnAnDataIntegratyViolationException(){
+        when(repository.findByEmail(anyString())).thenReturn(optionalUser);
+
+        try {
+            optionalUser.get().setId(2);
+            service.create(userDto);
+        } catch (Exception ex){
+            assertEquals(DataIntegratyViolationException.class, ex.getClass());
+            assertEquals("E-mail já cadastrado no sistema", ex.getMessage());
         }
     }
     
