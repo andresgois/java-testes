@@ -19,9 +19,8 @@ import br.com.dicasdeumdev.api.repository.UserRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class UserServiceImplTest {
@@ -128,6 +127,14 @@ public class UserServiceImplTest {
             assertEquals(DataIntegratyViolationException.class, ex.getClass());
             assertEquals("E-mail já cadastrado no sistema", ex.getMessage());
         }
+    }
+
+    @Test
+    void deleteWithSucess(){
+        when(repository.findById(anyInt())).thenReturn(optionalUser);
+        doNothing().when(repository).deleteById(anyInt());
+        service.delete(anyInt());
+        verify(repository, times(1)).deleteById(anyInt());
     }
     
     private void startUser() {
