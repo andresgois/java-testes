@@ -148,7 +148,6 @@ public class UserServiceImplTest {
             assertEquals(ObjectNotFoundException.class, ex.getClass());
             assertEquals("Objeto não encontrado", ex.getMessage());
         }
-
     }
     
     private void startUser() {
