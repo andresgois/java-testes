@@ -38,8 +38,8 @@ class UserResourceTest {
     public static final String NAME = "Andre";
     public static final String EMAIL = "andre@email.com";
     public static final String PASSWORD = "123";
-    private User user;
-    private UserDTO userDto;
+    private User user = new User();
+    private UserDTO userDto = new UserDTO();
 
     @BeforeEach
     void setUp() {
