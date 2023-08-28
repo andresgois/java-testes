@@ -8,12 +8,10 @@ import br.com.dicasdeumdev.api.service.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
-import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.*;
@@ -32,8 +30,6 @@ public class UserServiceImplTest {
     private UserServiceImpl service;
     @Mock           // fingi busca os dados
     private UserRepository repository;
-    @Mock
-    private ModelMapper mapper;
     private User user;
     private UserDTO userDto;
     private Optional<User> optionalUser;
