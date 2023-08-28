@@ -1,21 +1,18 @@
 package br.com.dicasdeumdev.api.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
+import br.com.dicasdeumdev.api.domain.User;
+import br.com.dicasdeumdev.api.domain.dto.UserDTO;
+import br.com.dicasdeumdev.api.repository.UserRepository;
 import br.com.dicasdeumdev.api.service.exceptions.DataIntegratyViolationException;
 import br.com.dicasdeumdev.api.service.exceptions.ObjectNotFoundException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import br.com.dicasdeumdev.api.domain.User;
-import br.com.dicasdeumdev.api.domain.dto.UserDTO;
-import br.com.dicasdeumdev.api.repository.UserRepository;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -29,6 +26,7 @@ public class UserServiceImplTest {
     public static final String NAME = "Andre";
     public static final String EMAIL = "andre@email.com";
     public static final String PASSWORD = "123";
+
     // Criar uma instância real
     @InjectMocks    // cria uma instância real
     private UserServiceImpl service;
